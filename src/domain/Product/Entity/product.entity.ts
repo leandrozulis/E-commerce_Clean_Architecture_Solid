@@ -6,10 +6,8 @@ type ProductSchema = {
   shortDescription: string;
   longDescription: string;
   category: string;
-  variation?: [{ quantity: number; type: string }] | [];
   quantityStock: number;
   quantityBuy: number;
-  numberReviews: number;
   favorite: boolean;
   createdAt: Date;
   updatedAt?: Date | undefined;
@@ -20,12 +18,12 @@ export class ProductEntity {
 
   public static create(
     name: string,
-    shortDescription: string,
-    longDescription: string,
     unitPrice: number = 0,
     promotionalPrice: number | null = null,
+    shortDescription: string,
+    longDescription: string,
     category: string = '',
-    variation: [{ quantity: number, type: string }] = [{ quantity: 0, type: '' }],
+    quantityStock: number = 0,
     favorite: boolean = false
   ) {
     return new ProductEntity({
@@ -36,10 +34,8 @@ export class ProductEntity {
       shortDescription,
       longDescription,
       category,
-      variation,
-      quantityStock: 0,
+      quantityStock,
       quantityBuy: 0,
-      numberReviews: 0,
       favorite,
       createdAt: new Date(),
       updatedAt: undefined
@@ -51,17 +47,13 @@ export class ProductEntity {
     promotionalPrice,
     quantityStock,
     quantityBuy,
-    numberReviews,
-    favorite,
-    variation
+    favorite
   }: Partial<ProductSchema>) {
     this.props.unitPrice = unitPrice ?? this.props.unitPrice;
     this.props.promotionalPrice = promotionalPrice ?? this.props.promotionalPrice;
     this.props.quantityStock = quantityStock ?? this.props.quantityStock;
     this.props.quantityBuy = quantityBuy ?? this.props.quantityBuy;
-    this.props.numberReviews = numberReviews ?? this.props.numberReviews;
     this.props.favorite = favorite ?? this.props.favorite;
-    this.props.variation = variation ?? this.props.variation ?? [];
     this.props.updatedAt = new Date();
   }
 
@@ -123,20 +115,12 @@ export class ProductEntity {
     return this.props.category;
   }
 
-  get variation(): [{ quantity: number, type: string }] | [] {
-    return this.props.variation ?? [];
-  }
-
   get quantityStock(): number {
     return this.props.quantityStock;
   }
 
   get quantityBuy(): number {
     return this.props.quantityBuy;
-  }
-
-  get numberReviews(): number {
-    return this.props.numberReviews;
   }
 
   get favorite(): boolean {
