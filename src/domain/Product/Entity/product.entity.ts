@@ -57,6 +57,10 @@ export class ProductEntity {
     this.props.updatedAt = new Date();
   }
 
+  public static with(props: ProductSchema) {
+    return new ProductEntity(props);
+  }
+
   public incrementQuantityBuy(quantity: number) {
     if (
       this.props.quantityStock >= quantity &&
