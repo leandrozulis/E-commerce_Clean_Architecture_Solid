@@ -1,4 +1,4 @@
-type ProductSchema = {
+export type ProductSchema = {
   id: string;
   name: string;
   unitPrice: number;
@@ -42,20 +42,20 @@ export class ProductEntity {
     });
   }
 
-  public update({
-    unitPrice,
-    promotionalPrice,
-    quantityStock,
-    quantityBuy,
-    favorite
-  }: Partial<ProductSchema>) {
-    this.props.unitPrice = unitPrice ?? this.props.unitPrice;
-    this.props.promotionalPrice = promotionalPrice ?? this.props.promotionalPrice;
-    this.props.quantityStock = quantityStock ?? this.props.quantityStock;
-    this.props.quantityBuy = quantityBuy ?? this.props.quantityBuy;
-    this.props.favorite = favorite ?? this.props.favorite;
-    this.props.updatedAt = new Date();
-  }
+  // public static update({
+  //   unitPrice,
+  //   promotionalPrice,
+  //   quantityStock,
+  //   quantityBuy,
+  //   favorite
+  // }: Partial<ProductSchema>): ProductSchema {
+  //   unitPrice = unitPrice ?? this.props.unitPrice;
+  //   this.props.promotionalPrice = promotionalPrice ?? this.props.promotionalPrice;
+  //   this.props.quantityStock = quantityStock ?? this.props.quantityStock;
+  //   this.props.quantityBuy = quantityBuy ?? this.props.quantityBuy;
+  //   this.props.favorite = favorite ?? this.props.favorite;
+  //   this.props.updatedAt = new Date();
+  // }
 
   public static with(props: ProductSchema) {
     return new ProductEntity(props);

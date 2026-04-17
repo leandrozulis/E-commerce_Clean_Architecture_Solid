@@ -1,5 +1,5 @@
 
-import { ProductEntity } from "../../../domain/Product/Entity/product.entity";
+import { ProductEntity, ProductSchema } from "../../../domain/Product/Entity/product.entity";
 import { ProductGateway } from "../../../domain/Product/Gateway/product.gateway";
 import { PrismaClient } from "../../../generated/prisma/client";
 
@@ -100,6 +100,43 @@ export class ProductRepositoryPrisma implements ProductGateway {
         id: findId.id
       }
     })
+  }
+
+  public async update(id: string, product: ProductSchema): Promise<ProductEntity> {
+
+    const findId = await this.prismaClient.product.update({
+      where: {
+        id
+      },
+      data: {
+        name: product.name,
+        unitPrice: product.unitPrice,
+        promotionalPrice: product.promotionalPrice,
+        shortDescription: product.shortDescription,
+        longDescription: product.longDescription,
+        category: product.category,
+        quantityStock: product.quantityStock,
+        quantityBuy: product.quantityBuy,
+        favorite: product.favorite
+      }
+    })
+
+    const products = ProductEntity.with({
+      id: findId.id,
+      name: findId.name ?? '',
+      unitPrice: findId.unitPrice ?? 0,
+      promotionalPrice: findId.promotionalPrice,
+      shortDescription: findId.shortDescription ?? '',
+      longDescription: findId.longDescription ?? '',
+      category: findId.category ?? '',
+      quantityStock: findId.quantityStock ?? 0,
+      quantityBuy: findId.quantityBuy ?? 0,
+      favorite: findId.favorite,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    })
+
+    return products
   }
 
 }
