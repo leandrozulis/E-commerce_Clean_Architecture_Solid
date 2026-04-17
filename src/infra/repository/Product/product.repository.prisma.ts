@@ -60,6 +60,32 @@ export class ProductRepositoryPrisma implements ProductGateway {
 
   }
 
+  public async list(): Promise<ProductEntity[]> {
+
+    const listAll = await this.prismaClient.product.findMany()
+
+    const productList = listAll.map((p) => {
+      const product = ProductEntity.with({
+        id: p.id,
+        name: p.name ?? '',
+        unitPrice: p.unitPrice ?? 0,
+        promotionalPrice: p.promotionalPrice,
+        shortDescription: p.shortDescription ?? '',
+        longDescription: p.longDescription ?? '',
+        category: p.category ?? '',
+        quantityStock: p.quantityStock ?? 0,
+        quantityBuy: p.quantityBuy ?? 0,
+        favorite: p.favorite,
+        createdAt: new Date()
+      })
+
+      return product
+    })
+
+    return productList
+
+  }
+
   public async remove(id: string): Promise<void> {
     const findId = await this.prismaClient.product.findFirst({
       where: { id }
