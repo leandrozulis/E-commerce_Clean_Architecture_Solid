@@ -1,10 +1,11 @@
 import { Request, Response } from "express"
 
-export type HttpMethod = "post" | "delete"
+export type HttpMethod = "post" | "delete" | "get"
 
 export const HttpMethod = {
   POST: "post" as HttpMethod,
-  DELETE: "delete" as HttpMethod
+  DELETE: "delete" as HttpMethod,
+  GET: "get" as HttpMethod
 } as const
 
 export interface Route {
